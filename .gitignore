@@ -1,0 +1,6 @@
+# sync
+sync-toolkit.sh
+.sync-log.txt
+
+# macOS
+.DS_Store
