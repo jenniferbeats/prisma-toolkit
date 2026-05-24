@@ -25,3 +25,7 @@ social:
 
 plugins:
   - jekyll-feed
+
+# Google Analytics
+google_analytics:
+  id: G-4DH3RRKEJK
