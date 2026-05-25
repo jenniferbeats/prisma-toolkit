@@ -2,30 +2,23 @@ title: "Prisma Toolkit"
 tagline: "El backbone técnico del ecosistema Código Prisma Φ"
 description: "Prompts, instrucciones, plantillas y configuraciones curadas."
 url: "https://toolkit.codigoprisma.xyz"
-
 theme: jekyll-theme-chirpy
 lang: es
 timezone: America/Bogota
-
 avatar: "https://github.com/jenniferbeats.png"
-
 author:
   name: "Jennifer Beats"
   url: "https://jenniferbeats.xyz"
-
 github:
   username: jenniferbeats
-
 social:
   name: Jennifer Beats
   email: ""
   links:
     - https://jenniferbeats.xyz
     - https://codigoprisma.xyz
-
 plugins:
   - jekyll-feed
-
 # Google Analytics
 google_analytics:
-  id: G-4DH3RRKEJK
+  id: REMOVED
