@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: null
 permalink: /
 title: "Prisma Toolkit — Calibrando"
 ---
