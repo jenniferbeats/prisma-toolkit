@@ -1,12 +1,13 @@
 ---
-layout: page
-title: Prisma Toolkit
+layout: null
+permalink: /
 ---
-
-El backbone técnico del ecosistema [Código Prisma Φ](https://codigoprisma.xyz).
-
-## Recursos
-
-- [Prompts](prompts/) — Prompts de IA curados
-- [Instructions](instructions/) — Tutoriales técnicos
-- [Templates](templates/) — Plantillas reutilizables
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=/coming-soon/" />
+    <title>Prisma Toolkit · Coming Soon</title>
+  </head>
+  <body></body>
+</html>
