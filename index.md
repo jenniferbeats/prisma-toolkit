@@ -1,13 +1,278 @@
 ---
-layout: null
+layout: page
 permalink: /
+title: "Prisma Toolkit — Calibrando"
 ---
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=/coming-soon/" />
-    <title>Prisma Toolkit · Coming Soon</title>
-  </head>
-  <body></body>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prisma Toolkit — Calibrando</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=REMOVED"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'REMOVED');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700;800&family=Encode+Sans+Semi+Expanded:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09091a;--violet:#6C51F5;--violet-soft:#8b7cf8;
+  --green:#8DC63F;--green-dim:rgba(141,198,63,0.12);
+  --text:#eeeaff;--text-muted:rgba(238,234,255,0.68);
+  --text-faint:rgba(238,234,255,0.28);--text-whisper:rgba(238,234,255,0.14);
+  --bg-glass:rgba(255,255,255,0.032);--border:rgba(255,255,255,0.07);
+  --font:'Dosis',sans-serif;
+}
+html,body{height:100%;background:var(--bg);font-family:var(--font);}
+.page{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.page::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -15%,rgba(141,198,63,0.14) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 8% 55%,rgba(34,211,238,0.06) 0%,transparent 50%),
+    radial-gradient(ellipse 45% 40% at 94% 72%,rgba(108,81,245,0.08) 0%,transparent 50%);
+  pointer-events:none;
+}
+.page::after{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);
+  background-size:24px 24px;pointer-events:none;
+}
+
+/* ── STATUS BAR ── */
+.status-bar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(9,9,26,0.9);
+  border-bottom:1px solid rgba(141,198,63,0.12);
+  padding:7px 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  backdrop-filter:blur(8px);
+}
+.status-left{
+  font-size:0.68rem;font-weight:500;
+  color:rgba(238,234,255,0.38);letter-spacing:0.08em;
+  display:flex;align-items:center;gap:8px;
+}
+.status-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--green);
+  animation:pulseDot 3s ease-in-out infinite;
+}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:0.25}}
+.status-right{font-size:0.68rem;color:rgba(238,234,255,0.22);letter-spacing:0.05em;}
+
+/* ── CONTENT ── */
+.content{
+  position:relative;z-index:10;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:5rem 2rem 4rem;gap:0;
+  max-width:600px;width:100%;
+}
+
+/* ── SEAL ── */
+.seal{
+  width:100px;height:100px;margin-bottom:1.8rem;
+  animation:floatPhi 7s ease-in-out infinite;
+  filter:drop-shadow(0 0 14px rgba(141,198,63,0.35)) drop-shadow(0 0 30px rgba(34,211,238,0.1));
+}
+@keyframes floatPhi{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ── TYPE ── */
+.eyebrow{
+  font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--green);font-weight:500;margin-bottom:1rem;
+}
+.logo{
+  font-size:clamp(1.6rem,5vw,2.4rem);font-weight:800;
+  letter-spacing:-0.01em;text-transform:uppercase;
+  margin-bottom:0.8rem;line-height:1;
+}
+.logo .l1{
+  display:block;
+  background:linear-gradient(135deg,#a3d65c 0%,#8DC63F 60%,#5a9e1a 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.logo .l2{display:block;color:var(--text);opacity:0.85;}
+.sub{
+  font-family:'Encode Sans Semi Expanded',sans-serif;
+  font-size:0.85rem;font-weight:300;
+  color:var(--text-muted);line-height:1.6;
+  max-width:420px;margin-bottom:1.8rem;
+}
+
+/* ── SPECTRUM ── */
+.spectrum{
+  display:flex;width:260px;height:2px;
+  border-radius:2px;overflow:hidden;margin:0 auto 1.8rem;
+}
+.spectrum span{flex:1;}
+.spectrum span:nth-child(1){background:#8DC63F}
+.spectrum span:nth-child(2){background:#6C51F5}
+.spectrum span:nth-child(3){background:#22d3ee}
+.spectrum span:nth-child(4){background:#f0c040}
+.spectrum span:nth-child(5){background:#8b7cf8}
+.spectrum span:nth-child(6){background:#f87171}
+
+/* ── NODES ── */
+.nodes{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;margin-bottom:2rem;
+}
+.node{
+  font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;
+  padding:0.28rem 0.75rem;border-radius:100px;
+  border:1px solid rgba(255,255,255,0.09);
+  background:var(--bg-glass);color:var(--text-faint);
+}
+.node.active{border-color:rgba(141,198,63,0.4);color:var(--green);background:var(--green-dim);}
+
+/* ── LINKS ── */
+.links-row{
+  display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;justify-content:center;
+  margin-bottom:1.5rem;
+}
+.ext-link{
+  font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;
+  color:var(--text-faint);text-decoration:none;
+  display:flex;align-items:center;gap:0.35rem;
+  cursor:pointer;transition:color 0.2s;
+}
+.ext-link:hover{color:var(--text-muted);}
+.ext-link .icon{
+  width:22px;height:22px;border-radius:5px;
+  border:1px solid rgba(255,255,255,0.07);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;background:var(--bg-glass);
+}
+.sep{color:var(--text-whisper);font-size:0.55rem}
+
+/* ── FOOTER ── */
+.footer{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  padding:1rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);
+  background:rgba(9,9,26,0.85);backdrop-filter:blur(8px);
+}
+.footer-brand{font-size:0.68rem;font-weight:500;color:var(--text-faint);letter-spacing:0.08em;}
+.footer-dots{display:flex;gap:8px;align-items:center;}
+.footer-dots span{width:6px;height:6px;border-radius:50%;opacity:0.45;box-shadow:0 0 5px currentColor;}
+.footer-right{font-size:0.65rem;font-style:italic;color:var(--text-whisper);letter-spacing:0.05em;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="status-bar">
+    <div class="status-left">
+      <div class="status-dot"></div>
+      <span>PRISMA TOOLKIT · preparando herramientas</span>
+    </div>
+    <div class="status-right" id="clock">--:--:-- UTC</div>
+  </div>
+
+  <div class="content">
+
+    <!-- SEAL — green palette, structure preserved from original -->
+    <svg class="seal" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="tkGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#8DC63F"/>
+          <stop offset="60%" stop-color="#5a9e1a"/>
+          <stop offset="100%" stop-color="#2d5a05"/>
+        </radialGradient>
+      </defs>
+      <circle cx="60" cy="60" r="57" fill="#c0392b"/>
+      <circle cx="60" cy="60" r="50.4" fill="#e67e22"/>
+      <circle cx="60" cy="60" r="43.2" fill="#27ae60"/>
+      <circle cx="60" cy="60" r="36" fill="#2980b9"/>
+      <circle cx="60" cy="60" r="28.8" fill="#8e44ad"/>
+      <circle cx="60" cy="60" r="21.6" fill="#0a0a14"/>
+      <circle cx="60" cy="60" r="57"   fill="none" stroke="#09091a" stroke-width="1.2"/>
+      <circle cx="60" cy="60" r="50.4" fill="none" stroke="#09091a" stroke-width="1.2"/>
+      <circle cx="60" cy="60" r="43.2" fill="none" stroke="#09091a" stroke-width="1.2"/>
+      <circle cx="60" cy="60" r="36"   fill="none" stroke="#09091a" stroke-width="1.2"/>
+      <circle cx="60" cy="60" r="28.8" fill="none" stroke="#09091a" stroke-width="1.2"/>
+      <circle cx="60" cy="60" r="21.6" fill="none" stroke="#09091a" stroke-width="1.5"/>
+      <circle cx="60" cy="3"   r="2.5" fill="rgba(34,211,238,0.8)"/>
+      <circle cx="117" cy="60" r="2"   fill="rgba(141,198,63,0.7)"/>
+      <circle cx="3"   cy="60" r="1.5" fill="rgba(240,192,64,0.6)"/>
+      <circle cx="60" cy="117" r="2"   fill="rgba(139,124,248,0.7)"/>
+      <circle cx="60" cy="60" r="14" fill="url(#tkGrad)"/>
+      <text x="60" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="16" font-style="italic" font-weight="900" fill="#09091a">Φ</text>
+      <circle cx="60" cy="60" r="57" fill="none" stroke="rgba(139,124,248,0.15)" stroke-width="0.5" stroke-dasharray="3 5"/>
+    </svg>
+
+    <p class="eyebrow">&lt;toolkit.codigoprisma.xyz /&gt; · status/calibrating</p>
+    <div class="logo">
+      <span class="l1">Prisma</span>
+      <span class="l2">Toolkit</span>
+    </div>
+    <p class="sub">
+      Las herramientas del ecosistema toman forma.<br/>
+      Prompts curados, templates y recursos<br/>
+      para construir sistemas personales resonantes.
+    </p>
+
+    <div class="spectrum">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="nodes">
+      <span class="node active">✦ Prompts curados</span>
+      <span class="node active">✦ Templates</span>
+      <span class="node">Recursos PKM</span>
+      <span class="node">Zettelkasten</span>
+      <span class="node">Sistemas personales</span>
+      <span class="node active">✦ En construcción</span>
+    </div>
+
+    <div class="links-row">
+      <a class="ext-link" href="https://jenniferbeats.xyz" target="_blank" rel="noopener">
+        <span class="icon">✦</span>Jennifer Beats
+      </a>
+      <span class="sep">·</span>
+      <a class="ext-link" href="https://codigoprisma.xyz" target="_blank" rel="noopener">
+        <span class="icon">Φ</span>Código Prisma
+      </a>
+      <span class="sep">·</span>
+      <a class="ext-link" href="https://jenniferbeats.xyz/contacto/" target="_blank" rel="noopener">
+        <span class="icon">@</span>Contacto
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span class="footer-brand">Φ Código Prisma · Jennifer Beats · 2026</span>
+    <div class="footer-dots">
+      <span style="background:#8DC63F;color:#8DC63F"></span>
+      <span style="background:#6C51F5;color:#6C51F5"></span>
+      <span style="background:#22d3ee;color:#22d3ee"></span>
+      <span style="background:#f0c040;color:#f0c040"></span>
+      <span style="background:#8b7cf8;color:#8b7cf8"></span>
+      <span style="background:#f87171;color:#f87171"></span>
+    </div>
+    <span class="footer-right">Tu presencia también es Código.</span>
+  </div>
+
+</div>
+<script>
+  function tick() {
+    const t = new Date().toISOString().slice(11,19) + ' UTC';
+    const el = document.getElementById('clock');
+    if (el) el.textContent = t;
+  }
+  tick(); setInterval(tick, 1000);
+</script>
+</body>
 </html>
