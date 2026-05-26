@@ -1,7 +1,6 @@
 ---
 layout: null
 permalink: /
-title: "Prisma Toolkit — Calibrando"
 ---
 <!DOCTYPE html>
 <html lang="es">
