@@ -21,4 +21,4 @@ plugins:
   - jekyll-feed
 # Google Analytics
 google_analytics:
-  id: REMOVED
+  id: ""
