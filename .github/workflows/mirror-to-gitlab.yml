@@ -1,8 +1,33 @@
+# ==========================================================
+#  Mirror to GitLab
+#
+#  GitHub es la fuente de verdad. GitLab es el respaldo que
+#  sostiene el pipeline si GitHub deja de estar disponible.
+#
+#  NO agregar --prune ni --mirror: un respaldo que borra lo
+#  que ya no esta en el origen deja de ser un respaldo. Si
+#  alguna vez GitLab debe quedar identico a GitHub, hay que
+#  revisar antes que no se pierda nada.
+# ==========================================================
+
 name: Mirror to GitLab
 
 on:
   push:
     branches: ["**"]
+    # Los pushes de tags no disparan un trigger de branches.
+    # Sin esta linea, un tag solo llega a GitLab de rebote,
+    # cuando despues se empuja un commit a alguna rama.
+    tags: ["**"]
+  # Permite dispararlo a mano desde la pestaña Actions,
+  # util para resincronizar sin tener que inventar un commit.
+  workflow_dispatch:
+
+# Dos corridas simultaneas podrian empujar en desorden.
+# Se encolan en vez de cancelarse: cada una debe completar.
+concurrency:
+  group: mirror-gitlab
+  cancel-in-progress: false
 
 jobs:
   mirror:
@@ -13,7 +38,32 @@ jobs:
           fetch-depth: 0
 
       - name: Push to GitLab
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN_FOR_MIRRORING }}
         run: |
-          git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN_FOR_MIRRORING }}@gitlab.com/info.codigoprisma-group/prisma-toolkit.git
+          set -euo pipefail
+
+          git remote add gitlab \
+            "https://oauth2:${GITLAB_TOKEN}@gitlab.com/info.codigoprisma-group/prisma-toolkit.git"
+
+          # actions/checkout materializa una sola rama local.
+          # 'git push --all' empuja refs/heads/*, es decir solo
+          # ramas locales — por eso el resto nunca viajaba.
+          # Este bucle las convierte en locales antes del push.
+          git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+
+          for ref in $(git for-each-ref \
+                --format='%(refname:strip=3)' refs/remotes/origin \
+              | grep -v '^HEAD$'); do
+            # Falla en la rama ya activa; es esperado y se ignora.
+            git branch -f "$ref" "refs/remotes/origin/$ref" 2>/dev/null || true
+          done
+
           git push gitlab --all --force
           git push gitlab --tags --force
+
+      - name: Resumen
+        if: always()
+        run: |
+          echo "Ramas y tags en GitLab despues del push:"
+          git ls-remote --heads --tags gitlab | sed 's/\t/  /'
