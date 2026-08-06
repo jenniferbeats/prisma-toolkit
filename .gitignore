@@ -5,3 +5,12 @@ sync-wiki.sh
 
 # macOS
 .DS_Store
+
+# Jekyll: salida de build
+# El workflow jekyll-gh-pages.yml hace checkout limpio, corre
+# `bundle exec jekyll build` y sube el artefacto desde el runner, así que el
+# _site del repo nunca se despliega. Versionarlo solo generaba diffs de ruido
+# cada vez que se construía en local.
+_site/
+.jekyll-cache/
+.jekyll-metadata
