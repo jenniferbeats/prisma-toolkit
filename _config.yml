@@ -17,8 +17,12 @@ social:
   links:
     - https://jenniferbeats.xyz
     - https://codigoprisma.xyz
-plugins:
-  - jekyll-feed
+# Sin `jekyll-feed`: Chirpy trae su propio `assets/feed.xml` con
+# `permalink: /feed.xml`, y los dos escribían al mismo destino — Jekyll
+# avisaba «may end up with unexpected contents» y ganaba el del plugin.
+# Se queda el del tema, que respeta su configuración y sus exclusiones;
+# el del plugin no se puede quitar sin parchear la gema.
+plugins: []
 # Google Analytics
 google_analytics:
   id: ""
