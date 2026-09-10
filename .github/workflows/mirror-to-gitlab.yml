@@ -37,7 +37,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Dependabot dispara con un almacen de secretos aparte: los
+      # secretos normales del repo llegan VACIOS. Sin esta guarda el
+      # push falla con "HTTP Basic: Access denied" en cada Bump, y
+      # parece un token vencido cuando no lo es. Diagnosticado el
+      # 24-ago-2026: todas las fallas eran de dependabot[bot], todos
+      # los exitos eran merges normales. El contenido llega igual en
+      # el siguiente push normal, porque se empuja --all.
+      - name: Verificar que el secreto existe
+        id: guard
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN_FOR_MIRRORING }}
+        run: |
+          if [ -z "${GITLAB_TOKEN}" ]; then
+            echo "listo=no" >> "$GITHUB_OUTPUT"
+            echo "::notice::Sin secreto en esta corrida (probablemente Dependabot). El espejo se salta."
+          else
+            echo "listo=si" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Push to GitLab
+        if: steps.guard.outputs.listo == 'si'
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN_FOR_MIRRORING }}
         run: |
