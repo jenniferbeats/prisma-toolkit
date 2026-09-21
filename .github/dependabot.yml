@@ -1,0 +1,26 @@
+# Vigilancia de dependencias
+#
+# Dependabot propone la actualización; el workflow `dependencias.yml` avisa de
+# vulnerabilidades conocidas martes y viernes. Son dos cosas distintas: una
+# versión nueva no siempre corrige algo, y un aviso puede no tener arreglo aún.
+#
+# Cadencia mensual y pocos PR abiertos a la vez: el ruido se termina ignorando.
+# Un salto de versión mayor se revisa a mano antes de fusionar: puede compilar
+# en verde y cambiar el sitio.
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(deps)"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(ci)"
