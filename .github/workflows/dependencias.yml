@@ -1,0 +1,41 @@
+name: Dependencias
+
+# Avisa de vulnerabilidades conocidas en las gemas de Ruby.
+#
+# NO bloquea, a propósito (decidido el 21-sep-2026): hay avisos sin arreglo
+# publicado, y un CI rojo permanente se vuelve ruido que nadie mira. El paso
+# queda en amarillo y el job sigue en verde.
+#
+# Corre también los lunes: una vulnerabilidad nueva se publica sin que el
+# código de acá cambie, así que esperar a un push la dejaría invisible.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auditar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # La misma versión que usa el workflow de Jekyll de este repo.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: false
+
+      - name: Instalar bundler-audit
+        run: gem install --no-document bundler-audit
+
+      # Lee Gemfile.lock contra la base de avisos de ruby-advisory-db.
+      - name: Vulnerabilidades en las gemas
+        continue-on-error: true
+        run: bundle-audit check --update
