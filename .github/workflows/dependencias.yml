@@ -39,3 +39,33 @@ jobs:
       - name: Vulnerabilidades en las gemas
         continue-on-error: true
         run: bundle-audit check --update
+
+      # Cruza el lockfile con OSV, que incluye la base de paquetes maliciosos
+      # de la OpenSSF: el aviso anterior cubre vulnerabilidades, no malware.
+      # Las vulnerabilidades quedan en amarillo, como arriba; el bloqueo lo
+      # decide el paso siguiente. Fijada por commit: es de terceros.
+      - name: Paquetes maliciosos y vulnerabilidades (OSV)
+        continue-on-error: true
+        uses: google/osv-scanner-action/osv-scanner-action@a345acffa64b0eaede81a3d9aae6141214d9c8fc # v2.6.0
+        with:
+          scan-args: |-
+            --format=json
+            --output=osv-resultados.json
+            --lockfile=Gemfile.lock
+
+      # Un paquete malicioso SÍ pone el CI en rojo (decidido el 24-sep-2026):
+      # la excepción del 21-sep era para vulnerabilidades sin arreglo, no
+      # para malware. Si OSV no dejó resultado también va en rojo: un
+      # escáner roto en silencio es no tener escáner.
+      - name: Bloquear si hay paquetes maliciosos
+        run: |
+          if [ ! -s osv-resultados.json ]; then
+            echo "::error::OSV no dejó resultado; no se puede confirmar que no haya paquetes maliciosos."
+            exit 1
+          fi
+          maliciosos=$(grep -oE '"MAL-[0-9]+-[0-9]+"' osv-resultados.json | sort -u | tr '\n' ' ')
+          if [ -n "$maliciosos" ]; then
+            echo "::error::Paquete malicioso en las dependencias: $maliciosos"
+            exit 1
+          fi
+          echo "Sin paquetes maliciosos conocidos."
