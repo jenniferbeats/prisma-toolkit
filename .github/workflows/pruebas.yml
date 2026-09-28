@@ -1,0 +1,29 @@
+name: Pruebas
+
+# Que el sitio compile en cada PR, antes de llegar a main. El build de
+# jekyll-gh-pages.yml corre solo al publicar, así que hasta el 28-sep-2026 un
+# cambio que rompía Jekyll se descubría ahí (fase C del plan «Bases firmes del
+# ecosistema»). Este job no publica ni inyecta el ID de Analytics.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Build con Jekyll
+        run: bundle exec jekyll build --strict_front_matter
+        env:
+          JEKYLL_ENV: production
