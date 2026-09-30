@@ -4,5 +4,5 @@ Este repositorio sigue el contrato universal del ecosistema Prisma gobernado por
 
 ## Invariantes locales
 - Verificar la configuración y contenido del sitio antes y después de editar.
-- Al terminar, hacer `git push origin main`.
+- Al terminar, subir una rama propia y abrir un PR (`git push -u origin <rama>` y `gh pr create`): el hook `pre-push` rechaza el push directo a `main`.
 - Usar herramientas y comandos compactos.
