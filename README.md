@@ -19,6 +19,30 @@ This is where the ecosystem's technical support lives: tested AI prompts, config
 
 ---
 
+## Qué hace
+
+**ES** · Es a la vez el archivo de prompts, instrucciones y plantillas del ecosistema y el sitio
+público `toolkit.codigoprisma.xyz` (Jekyll con el tema Chirpy) que los muestra. **EN** · It is both the
+ecosystem's archive of prompts, instructions and templates and the public site that serves them.
+
+## Qué lo dispara
+
+- **Publicar:** fusionar un PR a `main`. Un workflow de GitHub Actions (`jekyll-gh-pages.yml`)
+  compila con `bundle exec jekyll build` y despliega en GitHub Pages, con el dominio de `CNAME`.
+- **Probar:** cada push corre las pruebas (`pruebas.yml`).
+- **Dependencias:** los martes y viernes a las 06:00 UTC, y a mano (`dependencias.yml`).
+- **Espejo:** cada push se copia al espejo de GitLab.
+
+## Qué toca
+
+Publica una dirección pública. **El repo es público**: lo que se sube a `main` lo puede leer cualquiera,
+así que nada de credenciales ni de notas íntimas. No escribe en ningún otro lugar.
+
+## Dónde deja el rastro
+
+El historial de git y los PR; las ejecuciones de GitHub Actions y los despliegues de GitHub Pages; y
+el espejo de GitLab.
+
 ## Estructura · Structure
 
 ```
