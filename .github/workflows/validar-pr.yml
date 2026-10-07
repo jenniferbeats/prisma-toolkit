@@ -1,0 +1,33 @@
+# Plantilla de contract/templates/calidad: en el repo se llama
+# `.github/workflows/validar-pr.yml`.
+#
+# Valida que el título del Pull Request cumpla con Conventional Commits
+# (engineering.md §12): prefijo (feat, fix, docs, refactor, test, chore, ci),
+# scope opcional en inglés, y asunto imperativo.
+# Asegura que al hacer squash & merge no se contamine la rama main con títulos genéricos.
+name: Validar Convención de PR
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  validar-titulo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@0723387faaf9b38adef4775cd42cfd5155ed6017 # v5.5.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            refactor
+            test
+            chore
+            ci
+          requireScope: false
