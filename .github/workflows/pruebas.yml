@@ -1,4 +1,4 @@
-name: Pruebas
+name: Testing
 
 # Que el sitio compile en cada PR, antes de llegar a main. El build de
 # jekyll-gh-pages.yml corre solo al publicar, así que hasta el 28-sep-2026 un
@@ -17,12 +17,13 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.CI_RUNNER || '"ubuntu-latest"') }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
 
       - uses: ruby/setup-ruby@v1
+        if: runner.os == 'Linux'
         with:
           ruby-version: '3.2'
           bundler-cache: true

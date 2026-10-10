@@ -11,7 +11,18 @@ name: Dependencias
 on:
   push:
     branches: [main]
+  # auditing informa y no bloquea (cambio 5, 9-oct-2026): corre en main, cada semana y
+  # solo en los PR que cambian dependencias, no en todos.
   pull_request:
+    paths:
+      - 'requirements*.txt'
+      - 'requirements*.lock'
+      - 'requirements*.in'
+      - 'pyproject.toml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'Gemfile*'
+      - '.github/workflows/dependencias.yml'
   schedule:
     - cron: '0 6 * * 2,5'
   workflow_dispatch:
@@ -20,7 +31,7 @@ permissions:
   contents: read
 
 jobs:
-  auditar:
+  auditing:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

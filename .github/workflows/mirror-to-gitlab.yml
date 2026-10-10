@@ -30,7 +30,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  mirror:
+  mirroring:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
