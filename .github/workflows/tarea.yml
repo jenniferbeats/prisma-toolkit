@@ -1,0 +1,45 @@
+name: tarea
+# Ningún issue sin Task de Azure (decidido por Jennifer el 11-oct-2026, opción B). Un issue sin la línea
+# `azure_task: N` recibe la etiqueta no-task y un comentario con el arreglo; cuando la tiene, la etiqueta se
+# quita. No impide crear el issue: lo marca. El camino que lo evita es `azure-lite tarjeta crear` (opción A).
+# Corre en el Mini y no gasta minutos de Actions; dura segundos y, si el Mini está apagado, espera en la cola.
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write
+
+concurrency:
+  group: tarea-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  task:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: El issue declara su Task de Azure
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMERO: ${{ github.event.issue.number }}
+          CUERPO: ${{ github.event.issue.body }}
+          ETIQUETAS: ${{ join(github.event.issue.labels.*.name, ',') }}
+        run: |
+          export PATH="/opt/homebrew/bin:$PATH"
+          marcada=false
+          case ",$ETIQUETAS," in *,no-task,*) marcada=true ;; esac
+          if printf '%s\n' "$CUERPO" | tr -d '\r' | grep -Eq '^azure_task:[[:space:]]*[0-9]+[[:space:]]*$'; then
+            if [ "$marcada" = true ]; then gh issue edit "$NUMERO" --remove-label no-task; fi
+            exit 0
+          fi
+          if [ "$marcada" = true ]; then exit 0; fi
+          gh label create no-task --color B60205 --description "Issue sin Task de Azure" 2>/dev/null || true
+          gh issue edit "$NUMERO" --add-label no-task
+          gh issue comment "$NUMERO" --body "Este issue no tiene Task de Azure: ningún issue sin Task ni madre (decisión de Jennifer, 11-oct-2026), y el corredor no lo toma hasta que la tenga.
+
+          **Para arreglarlo:** crea la Task bajo su Story, PoC o Bug con \`azure-lite crear Task --padre <madre> --issue <url de este issue>\` y agrega \`azure_task: <N>\` y \`azure_story: <madre>\` al frontmatter del issue. La etiqueta se quita sola al editarlo.
+
+          **Para el próximo:** \`azure-lite tarjeta crear\` hace la Task primero y después el issue, con la tarjeta completa."
