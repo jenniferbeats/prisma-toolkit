@@ -20,6 +20,8 @@ updates:
       default-days: 7
     commit-message:
       prefix: "chore(deps)"
+    # Agrupado el 14-nov-2026 (AB#2404): parches y minors van juntos, la seguridad en su
+    # propio PR y cada salto mayor suelto, para decidirlo uno por uno.
     groups:
       dependencias-menores:
         patterns:
@@ -27,6 +29,10 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      seguridad-bundler:
+        applies-to: security-updates
+        patterns:
+          - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -39,7 +45,16 @@ updates:
       default-days: 7
     commit-message:
       prefix: "chore(ci)"
+    # Agrupado el 14-nov-2026 (AB#2404): parches y minors van juntos, la seguridad en su
+    # propio PR y cada salto mayor suelto, para decidirlo uno por uno.
     groups:
       acciones:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      seguridad-acciones:
+        applies-to: security-updates
         patterns:
           - "*"
